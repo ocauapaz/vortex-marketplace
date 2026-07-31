@@ -155,8 +155,12 @@ Roteamento: `BrowserRouter` com `basename` do repo + cópia de `index.html` para
 - Pendente para a Fase 5: instalar no celular de verdade e rodar o Lighthouse.
 
 ### Fase 5 — Deploy front, README e vídeo (Dias 13–15)
-- Dia 13: workflow `deploy-pages.yml`, `base` do Vite = `/nome-do-repo/`, 404.html, `VITE_API_URL`
-  como variável do Actions. Ajustar `FRONTEND_ORIGIN` no Fly com a URL final do Pages.
+- [x] Dia 13: front no ar em **https://ocauapaz.github.io/vortex-marketplace/** via GitHub Actions.
+      Verificado: rota profunda `/explorar` abre, 12 cards vindos do Fly, CORS respondendo
+      `access-control-allow-origin: https://ocauapaz.github.io`, service worker ativo e
+      cache `api-desapega` populado em produção.
+      Dois consertos de portabilidade Windows→Linux no caminho: binstubs sem bit de execução
+      e shebang `ruby.exe`. O Dockerfile já corrigia os dois, o CI não — por isso só o CI quebrava.
 - Dia 14: README completo — descrição, setup passo a passo (back e front), stack, links de produção
   e **Diário de Bordo da IA** (ferramentas, 3 prompts reais colados, link de chat, reflexão crítica
   sobre um erro real da IA). Esse item é obrigatório e tem nota pesada — não deixar para o dia 15.
