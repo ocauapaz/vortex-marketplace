@@ -26,6 +26,8 @@ test:
 #
 # Similarly, if you deploy your application as a Docker container, you must
 # ensure the database is located in a persisted volume.
+# storage/ é o ponto de montagem do volume do Fly (/rails/storage). Se o banco ficar
+# fora dele, cada deploy recria a máquina e os dados somem.
 production:
   <<: *default
-  # database: path/to/persistent/storage/production.sqlite3
+  database: storage/production.sqlite3

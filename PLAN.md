@@ -122,11 +122,14 @@ Roteamento: `BrowserRouter` com `basename` do repo + cópia de `index.html` para
 - [x] **Check:** 39 testes / 98 asserções verdes, rubocop e brakeman limpos
 - Decisão: o JWT é assinado com `secret_key_base` — sem `JWT_SECRET` separado para configurar no Fly.
 
-### Fase 2 — Deploy da API (Dia 5)
-- `fly launch --no-deploy`, `fly volumes create data --size 1`, mount em `/rails/storage`.
-- Secrets: `RAILS_MASTER_KEY` e `FRONTEND_ORIGIN` (aceita várias origens separadas por vírgula).
-- `fly deploy --remote-only`. Rodar seeds em produção via `fly ssh console`.
-- **Deploy cedo, não no fim.** Descobrir problema de CORS/volume no dia 5 é barato; no dia 14 é fatal.
+### Fase 2 — Deploy da API (Dia 5) — ✅ concluída
+- [x] App `vortex-marketplace-api` em `gru`, volume `vortex_data` (1GB) montado em `/rails/storage`
+- [x] Secrets `RAILS_MASTER_KEY` e `FRONTEND_ORIGIN` (`http://localhost:5173,https://ocauapaz.github.io`)
+- [x] `fly deploy --remote-only` — no ar em **https://vortex-marketplace-api.fly.dev**
+- [x] Verificado: `/api/v1/stats` 200, login + `/me` com JWT, dados sobrevivem a restart da máquina
+- Seeds rodaram sozinhas: o `bin/docker-entrypoint` do Rails 8 chama `db:prepare`, que semeia
+  quando o banco acabou de ser criado. Não precisa de `fly ssh console`.
+- `HTTP_PORT=8080`: o container roda como uid 1000 e não tem permissão para escutar na 80.
 
 ### Fase 3 — Frontend funcional (Dias 6–9)
 - Dia 6: Tailwind, layout base, `lib/api.ts` (fetch + token no localStorage), rotas.
