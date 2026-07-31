@@ -115,15 +115,16 @@ Roteamento: `BrowserRouter` com `basename` do repo + cópia de `index.html` para
 - [ ] `rails new api --api --skip-action-mailer --skip-action-mailbox --skip-action-text --skip-active-storage --skip-action-cable --skip-jbuilder`
 - [ ] `npm create vite@latest web -- --template react-ts`
 
-### Fase 1 — Backend núcleo (Dias 2–4)
-- Dia 2: models + migrations + validações + seeds (~30 anúncios realistas para a landing não ficar vazia).
-- Dia 3: `ListingsController` CRUD + filtros + `StatsController`. Serializers. `rescue_from`.
-- Dia 4: auth JWT (concern `Authenticable`, ~25 linhas), `has_secure_password`, rate limit, rack-cors.
-- **Check:** request tests minitest cobrindo CRUD, filtros, 401 sem token, 403 de não-dono, 422 de validação.
+### Fase 1 — Backend núcleo (Dias 2–4) — ✅ concluída
+- [x] models + migrations + validações + seeds (6 usuários, 31 anúncios)
+- [x] `ListingsController` CRUD + filtros + paginação, `StatsController`, serializers, `rescue_from`
+- [x] auth JWT (`JsonWebToken` + helpers na `ApplicationController`), `has_secure_password`, rate limit, rack-cors
+- [x] **Check:** 39 testes / 98 asserções verdes, rubocop e brakeman limpos
+- Decisão: o JWT é assinado com `secret_key_base` — sem `JWT_SECRET` separado para configurar no Fly.
 
 ### Fase 2 — Deploy da API (Dia 5)
 - `fly launch --no-deploy`, `fly volumes create data --size 1`, mount em `/rails/storage`.
-- Secrets: `RAILS_MASTER_KEY`, `JWT_SECRET`, `FRONTEND_ORIGIN`.
+- Secrets: `RAILS_MASTER_KEY` e `FRONTEND_ORIGIN` (aceita várias origens separadas por vírgula).
 - `fly deploy --remote-only`. Rodar seeds em produção via `fly ssh console`.
 - **Deploy cedo, não no fim.** Descobrir problema de CORS/volume no dia 5 é barato; no dia 14 é fatal.
 

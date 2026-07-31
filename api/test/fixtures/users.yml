@@ -1,0 +1,11 @@
+ana:
+  name: Ana Souza
+  email: ana@aluno.unifor.br
+  password_digest: <%= BCrypt::Password.create("vortex2026") %>
+  course: Ciência da Computação
+
+bruno:
+  name: Bruno Lima
+  email: bruno@aluno.unifor.br
+  password_digest: <%= BCrypt::Password.create("vortex2026") %>
+  course: Engenharia Civil
