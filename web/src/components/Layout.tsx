@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
+import { useOnline } from '../hooks/useOnline'
 import { useAuth } from '../lib/auth'
 
 const NAV = [
@@ -37,9 +38,18 @@ function Logo() {
 export function Layout() {
   const { user, signOut } = useAuth()
   const location = useLocation()
+  const isOnline = useOnline()
 
   return (
     <div className="flex min-h-svh flex-col bg-canvas">
+      {!isOnline && (
+        <p
+          role="status"
+          className="bg-amber-400 px-4 py-2 text-center text-sm font-medium text-amber-950"
+        >
+          Você está offline — mostrando os anúncios que já tinham sido carregados.
+        </p>
+      )}
       <div className="bg-night px-4 py-2 text-center text-xs text-white/70 sm:px-6">
         Um projeto do{' '}
         <a

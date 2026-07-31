@@ -142,13 +142,17 @@ Roteamento: `BrowserRouter` com `basename` do repo + cópia de `index.html` para
 - Decisão: `useAsync` faz stale-while-revalidate. A primeira versão descartava os dados
   ao trocar de filtro e a grade piscava em branco entre uma resposta e outra.
 
-### Fase 4 — PWA + polimento (Dias 10–12)
-- Dia 10: `vite-plugin-pwa` — manifest, ícones 192/512, SW com precache do shell +
-  `NetworkFirst` para `GET /api/v1/listings` (bônus offline). Testar instalação real no celular.
-- Dia 11: Motion — transições de página, entrada dos cards em stagger, feedback de botões.
-  Respeitar `prefers-reduced-motion`.
-- Dia 12: GSAP + ScrollTrigger só na landing — parallax do hero, reveal das seções, contador de stats.
-- **Check:** Lighthouse (PWA instalável + performance), teste em viewport 375px e 1440px.
+### Fase 4 — PWA + polimento (Dias 10–12) — ✅ concluída
+- [x] `vite-plugin-pwa` (generateSW): manifest válido, ícones 192/512 + maskable + apple-touch,
+      precache de 19 arquivos (702 KiB), `navigateFallback` para as rotas do SPA
+- [x] `NetworkFirst` para `/api/v1/` e `CacheFirst` para imagens — **verificado com a API derrubada**:
+      a vitrine recarregou com 12 cards e "31 resultados" vindos do cache
+- [x] Aviso de offline no topo quando `navigator.onLine` é falso
+- [x] Motion (transições, reveals, stagger) e GSAP (parallax, contadores), com `prefers-reduced-motion`
+- [x] 375px sem overflow horizontal, barra inferior de app aparecendo só no mobile
+- Armadilha: `urlPattern` de RegExp que não casa desde o **início** da URL é ignorado pelo Workbox
+  em requisições cross-origin — e a API sempre é cross-origin. As regras usam função.
+- Pendente para a Fase 5: instalar no celular de verdade e rodar o Lighthouse.
 
 ### Fase 5 — Deploy front, README e vídeo (Dias 13–15)
 - Dia 13: workflow `deploy-pages.yml`, `base` do Vite = `/nome-do-repo/`, 404.html, `VITE_API_URL`
