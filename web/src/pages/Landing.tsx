@@ -56,13 +56,15 @@ export function Landing() {
   const categories = stats.data?.available_categories ?? []
 
   // Parallax do herói: o fundo anda mais devagar que o conteúdo enquanto a página rola.
+  // O GSAP só toca em elementos que o Motion não controla — os dois escrevendo
+  // opacity/transform inline no mesmo nó se sobrescrevem e o conteúdo some ao voltar.
   useEffect(() => {
     const context = gsap.context(() => {
       gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
         const scrub = { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: 0.4 }
 
         gsap.to('[data-hero-bg]', { yPercent: 24, ease: 'none', scrollTrigger: scrub })
-        gsap.to('[data-hero-content]', { y: -60, opacity: 0.25, ease: 'none', scrollTrigger: scrub })
+        gsap.to('[data-hero-parallax]', { y: -60, ease: 'none', scrollTrigger: scrub })
       })
     }, heroRef)
 
@@ -74,9 +76,8 @@ export function Landing() {
       <section ref={heroRef} className="vortex-gradient relative overflow-hidden text-white">
         <div aria-hidden="true" data-hero-bg className="dot-grid absolute inset-0 -bottom-24" />
 
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
+        <div data-hero-parallax className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
           <motion.div
-            data-hero-content
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
