@@ -1,111 +1,93 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import 'tailwindcss';
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* Identidade herdada dos sites da UNIFOR (azul institucional, Open Sans, cards com
+   sombra navy) e do Laboratório Vortex (roxo profundo, violeta, ciano, Rubik). */
+@theme {
+  --color-brand: #044cf4;
+  --color-brand-deep: #002969;
+  --color-violet: #6f4bef;
+  --color-cyan: #12cee4;
+  /* Versão escurecida do ciano: o tom da marca não tem contraste suficiente sobre branco. */
+  --color-cyan-ink: #0b7f8e;
+  --color-night: #170d29;
+  --color-night-2: #36225d;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --color-surface: #ffffff;
+  --color-canvas: #f4f6fb;
+  --color-ink: #212529;
+  --color-muted: #5a6472;
+  --color-line: #e2e7f0;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  --font-display: 'Rubik Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Open Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 10px 28px -12px rgb(0 41 105 / 0.35);
+  --shadow-lift: 0 20px 44px -18px rgb(0 41 105 / 0.5);
+  --shadow-brand: 0 12px 30px -14px rgb(4 76 244 / 0.65);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    /* clip em vez de hidden: hidden transforma o body em container de rolagem e
+       atrapalha o header sticky e o ScrollTrigger. */
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand);
+    outline-offset: 2px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+@layer components {
+  /* Fundo do herói: mesmo salto de roxo profundo para violeta usado no site do Vortex. */
+  .vortex-gradient {
+    background:
+      radial-gradient(120% 90% at 88% 8%, rgb(111 75 239 / 0.55) 0%, transparent 55%),
+      radial-gradient(90% 80% at 10% 95%, rgb(18 206 228 / 0.28) 0%, transparent 58%),
+      linear-gradient(150deg, var(--color-night) 0%, var(--color-night-2) 55%, var(--color-brand-deep) 100%);
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  .dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.16) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }

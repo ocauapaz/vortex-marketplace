@@ -14,7 +14,8 @@ Prazo: 15 dias. Repositório público único (monorepo).
 | Auth | `has_secure_password` + JWT (gem `jwt`) | Bônus do edital. Token evita cookie cross-origin (GitHub Pages ↔ Fly). |
 | Frontend | React 19 + Vite + TypeScript | TS é bônus. Vite gera build estático para Pages. |
 | Estilo | Tailwind CSS | Responsividade desktop→mobile sem CSS custom espalhado. |
-| Animação | Motion (`motion/react`) + GSAP ScrollTrigger | Motion: estado/transição de componente e página. GSAP: narrativa de scroll da landing. Nunca os dois no mesmo elemento. |
+| Identidade | UNIFOR + Vortex | Azul `#044CF4` e navy `#002969` da unifor.br, roxo `#170D29`/violeta `#6F4BEF`/ciano `#12CEE4` do vortex.unifor.br. Fontes: Rubik (Vortex) nos títulos, Open Sans (UNIFOR) no corpo. |
+| Animação | Motion (`motion/react`) + GSAP ScrollTrigger | Motion: transição de página, reveal de seção e entrada dos cards. GSAP: parallax do herói e contadores das estatísticas. Nunca os dois no mesmo elemento. |
 | PWA | `vite-plugin-pwa` (Workbox) | Gera `manifest.webmanifest` + Service Worker + runtime cache. Não escrever SW à mão. |
 | Deploy API | Fly.io (`fly deploy --remote-only`) | Sem Docker local. |
 | Deploy Front | GitHub Pages via GitHub Actions | Pedido do dev. |
@@ -131,11 +132,15 @@ Roteamento: `BrowserRouter` com `basename` do repo + cópia de `index.html` para
   quando o banco acabou de ser criado. Não precisa de `fly ssh console`.
 - `HTTP_PORT=8080`: o container roda como uid 1000 e não tem permissão para escutar na 80.
 
-### Fase 3 — Frontend funcional (Dias 6–9)
-- Dia 6: Tailwind, layout base, `lib/api.ts` (fetch + token no localStorage), rotas.
-- Dia 7: Explorar + card de anúncio + filtros + estados de loading/erro/vazio.
-- Dia 8: Login/Cadastro + rota protegida + Novo anúncio + Meus anúncios.
-- Dia 9: Landing completa (hero, stats, vitrine, CTAs) — conteúdo antes de animação.
+### Fase 3 — Frontend funcional (Dias 6–9) — ✅ concluída
+- [x] Tailwind v4, layout base, `lib/api.ts`, rotas com `BrowserRouter` + basename
+- [x] Explorar com filtros na URL, busca com debounce, paginação, estados de loading/erro/vazio
+- [x] Login/Cadastro, rota protegida, Novo anúncio com prévia ao vivo, Meus anúncios
+- [x] Landing (herói, estatísticas, como funciona, vitrine com filtro)
+- [x] Identidade refeita na linguagem UNIFOR + Vortex
+- [x] Animações adiantadas da Fase 4: reveals com Motion, parallax e contadores com GSAP
+- Decisão: `useAsync` faz stale-while-revalidate. A primeira versão descartava os dados
+  ao trocar de filtro e a grade piscava em branco entre uma resposta e outra.
 
 ### Fase 4 — PWA + polimento (Dias 10–12)
 - Dia 10: `vite-plugin-pwa` — manifest, ícones 192/512, SW com precache do shell +
