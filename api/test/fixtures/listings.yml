@@ -1,0 +1,16 @@
+calculo:
+  user: ana
+  title: Cálculo A usado
+  description: Livro em bom estado, com anotações a lápis.
+  category: Livros
+  kind: sale
+  price_cents: 4500
+  image_url: https://picsum.photos/seed/calculo/600/400
+
+jaleco:
+  user: bruno
+  title: Jaleco tamanho M
+  description: Doação para quem está entrando nas aulas práticas.
+  category: Saúde
+  kind: donation
+  image_url: https://picsum.photos/seed/jaleco/600/400

@@ -1,0 +1,3 @@
+# ponytail: força LF no repo inteiro. O Dockerfile do Fly builda em Linux e
+# scripts como api/bin/docker-entrypoint quebram se chegarem com CRLF do Windows.
+* text=auto eol=lf
